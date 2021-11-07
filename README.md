@@ -14,9 +14,9 @@ Use this `REAMDE.md` file to describe your final project (as detailed on Canvas)
   * How many movies & TV shows were released on Netflix in 2020?
 
 # Finding Data
-1
+Dataset 1: netflix_originals
 * **Where did you download the data (e.g., a web URL)?**
- *
+ * We got the data from kaggle’s dataset collection, using a url to download and get it into github. The url is https://www.kaggle.com/luiscorter/netflix-original-films-imdb-scores. 
 * **How was the data collected or generated? Make sure to explain who collected the data (not necessarily the same people that host the data), and who or what the data is about?**
  *
 * **How many observations (rows) are in your data?**
