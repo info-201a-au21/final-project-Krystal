@@ -13,3 +13,24 @@ Use this `REAMDE.md` file to describe your final project (as detailed on Canvas)
   * Is there a correlation between genres and ratings?
   * How many movies & TV shows were released on Netflix in 2020?
 
+# Finding Data
+1
+* **Where did you download the data (e.g., a web URL)?
+* **How was the data collected or generated? Make sure to explain who collected the data (not necessarily the same people that host the data), and who or what the data is about?
+* **How many observations (rows) are in your data?
+* **How many features (columns) are in the data?
+* **What questions (from above) can be answered using the data in this dataset?
+
+2
+* **Where did you download the data (e.g., a web URL)?
+* **How was the data collected or generated? Make sure to explain who collected the data (not necessarily the same people that host the data), and who or what the data is about?
+* **How many observations (rows) are in your data?
+* **How many features (columns) are in the data?
+* **What questions (from above) can be answered using the data in this dataset?
+
+3
+* **Where did you download the data (e.g., a web URL)?
+* **How was the data collected or generated? Make sure to explain who collected the data (not necessarily the same people that host the data), and who or what the data is about?
+* **How many observations (rows) are in your data?
+* **How many features (columns) are in the data?
+* **What questions (from above) can be answered using the data in this dataset?
