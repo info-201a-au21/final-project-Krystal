@@ -4,7 +4,7 @@ library(ggplot2)
 library(tidyverse)
 library(dplyr)
 
-originals %>%
+genre_avg_scores <- originals %>%
   group_by(Genre) %>%
   filter(n() >= 5) %>%
   summarize(mean_scores = mean(IMDB.Score)) %>%
