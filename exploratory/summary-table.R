@@ -1,20 +1,19 @@
 #aggregate table
 
-library(ggplot2)
-library(tidyverse)
+library(data.table)
 library(dplyr)
 
-genre_avg_scores <- originals %>%
+genre_grouping <- originals %>%
   group_by(Genre) %>%
-  filter(n() >= 5) %>%
-  summarize(mean_scores = mean(IMDB.Score)) %>%
-  ggplot(aes(x = Genre, y = mean_scores, fill = Genre)) +
-    geom_col() +
-    geom_text(aes(label = round(mean_scores, 1), hjust = -0.2)) +
-    coord_flip() +
-    theme(legend.position = "none") +
-    labs(
-      x = "Genres",
-      y = "Average IMDB Scores",
-      title = paste("Average IMDB Scores for each Genre of Netflix Originals")
-    )
+  summarize(mean_scores = mean(IMDB.Score))
+
+num_genre <- originals %>%
+  group_by(Genre) %>%
+  summarise(n())
+  
+  
+avg_scores_table <- data.table(genre_grouping$Genre, genre_grouping$mean_scores)
+avg_scores_table$V2 <- round(avg_scores_table$V2, digit = 2)
+avg_scores_table$V3 <- num_genre[, 2]
+colnames(avg_scores_table) <- c("Genre", "Average IMDB Score", "Count")
+avg_scores_table <- avg_scores_table[, c(1, 3, 2)]
