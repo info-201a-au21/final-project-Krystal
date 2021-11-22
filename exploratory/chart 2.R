@@ -7,7 +7,6 @@ library(stringr)
 
 # Filter useful dataframe that the language count at are at least 5 
 count_language <- originals %>%
-  #group_by(Genre) %>%
   arrange(Language) %>%
   group_by(Language) %>%
   mutate(language_sum = length(Language)) %>%
@@ -16,8 +15,11 @@ count_language <- originals %>%
   select(Language, language_sum)
 
 # Stack bar chart for count of each language
-stack_bar <- ggplot(count_language, aes(x = "", y = language_sum, fill = Language))+
-  geom_bar(width = 1, stat = "identity") + labs(y = "Sum of language")
+stack_bar <- ggplot(count_language, 
+                    aes(x = "", y = language_sum, fill = Language))+
+  geom_bar(width = 1, stat = "identity") + 
+  labs(y = "Sum of language", 
+       title = "Relationship between Language Sum and Different Languages")
 
 
 
