@@ -1,4 +1,4 @@
-# Chart 1
+# Chart 1 - Bar graoh for average IMDB score in each genre
 
 library(ggplot2)
 library(tidyverse)
