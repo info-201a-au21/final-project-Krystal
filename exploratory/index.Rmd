@@ -6,22 +6,14 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-<<<<<<< HEAD
-=======
 knitr::opts_chunk$set(echo = TRUE)
 
->>>>>>> 1adb91c8ea244553282ae1b2cff059b3b177ab30
 library("dplyr")
 library("ggplot2")
 library("knitr")
 library("tidyr")
-<<<<<<< HEAD
-source("summary-table.R")
-knitr::opts_chunk$set(echo = TRUE)
-=======
 
 source("summary-table.R")
->>>>>>> 1adb91c8ea244553282ae1b2cff059b3b177ab30
 ```
 
 ## Introductory Paragraph
