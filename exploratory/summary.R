@@ -1,9 +1,9 @@
 library("tidyverse")
 library("dplyr")
-originals <- read.csv("https://raw.githubusercontent.com/info-201a-au21/final-project-SimritaGopalan/main/data/netflix_originals.csv?token=AV5INKOEACOPFRW43Q4PN2TBTXP7K")
-View(originals)
 
-# 1. Mean of IMDB score of all movies. 
+originals <- read.csv("https://raw.githubusercontent.com/info-201a-au21/final-project-SimritaGopalan/main/data/netflix_originals.csv?token=AV5INKOEACOPFRW43Q4PN2TBTXP7K")
+
+# 1. Mean of IMDB score of all movies.
 avg_score <- mean(originals$IMDB.Score)
 # 2. Median of IMDB score of all movies
 median_score <- median(originals$IMDB.Score)
@@ -23,5 +23,3 @@ num_movies <- originals %>%
   summarise(n) %>%
   filter(n == max(n)) %>%
   pull(Genre)
-
-
