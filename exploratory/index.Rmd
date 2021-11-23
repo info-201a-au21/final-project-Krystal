@@ -4,6 +4,18 @@ author: "Navya, Simrita, Krystal, Uyen"
 date: "11/22/2021"
 output: html_document
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library("dplyr")
+library("ggplot2")
+library("knitr")
+library("tidyr")
+
+source("summary-table.R")
+```
+
 ## Introductory Paragraph
 Our group is doing a project on Netflix movies, and we aimed to look into the correlation between IMDB ratings and genres for Netflix Original content, and discover if there were any patterns in the data that might tell us how Netflix chooses to produce its Original Content. Our Dataset was scoured by the user (Luis Corter) from a Wikipedia page, getting base characteristics of Netflix’s original content until June 1st, 2021 and their IMDB scores. There are 584 rows in this dataset, and 6 columns: title, genre(s), original premiere date, runtime (minutes), IMDB scores, and language availability.
 
@@ -11,20 +23,21 @@ Our group is doing a project on Netflix movies, and we aimed to look into the co
 ## Summary Paragraph
 Our Summary Function tells us that the mean of the IMDB score of all Netflix Original movies is a 6.27, that the median of the IMDB score of all Netflix Original movies is a 6.35, that the average runtime of all Netflix Original movies is 93.58, that the most common language of all Netflix Original movies is English, and that the genre with the most number of movies are Documentaries. 
 
-```{r setup, include=FALSE}
-source("summary-table.R")
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 
 ## Table Report
 The table shows all genres present in the data of Netflix Originals, how many are present, and what the average IMDB score of each genre is. We are able to see that Netflix produces many Documentaries, few Musicals, and films in many genres. We are also able to contextualize data more, as one can come in with a notion that Netflix produces many Action movies, but after seeing the data are able to realize that they produce more Romantic Comedies than Action movies. We are also able to see that the Netflix Animation/Christmas/Comedy/Adventure combination Film scored the highest with an 8.2, and average ratings of Netflix Originals in in specific genres and crossovers. 
+
+
+```{r setup1, include=FALSE}
+source("summary-table.R")
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 ``` {r echo=FALSE}
 avg_scores_table
 ```
 
-```{r setup, include=FALSE}
+```{r setup2, include=FALSE}
 source("chart1.R")
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -35,7 +48,7 @@ Chart 1 shows a bar graph for the average IMDB score in each genre of Netflix Or
 ``` {r echo=FALSE}
 genre_avg_scores
 ```
-```{r setup, include=FALSE}
+```{r setup3, include=FALSE}
 source("chart2.R")
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -47,7 +60,7 @@ Chart 2 shows a Count Stack Graph for how many different languages Netflix Origi
 stack_bar
 ```
 
-```{r setup, include=FALSE}
+```{r setup4, include=FALSE}
 source("chart3.R")
 knitr::opts_chunk$set(echo = TRUE)
 ```
