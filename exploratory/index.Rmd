@@ -24,7 +24,7 @@ The table shows all genres present in the data of Netflix Originals, how many ar
 avg_scores_table
 ```
 
-```{r setup, include=FALSE}
+```{r setup1, include=FALSE}
 source("chart1.R")
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -35,7 +35,7 @@ Chart 1 shows a bar graph for the average IMDB score in each genre of Netflix Or
 ``` {r echo=FALSE}
 genre_avg_scores
 ```
-```{r setup, include=FALSE}
+```{r setup2, include=FALSE}
 source("chart2.R")
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -47,7 +47,7 @@ Chart 2 shows a Count Stack Graph for how many different languages Netflix Origi
 stack_bar
 ```
 
-```{r setup, include=FALSE}
+```{r setup3, include=FALSE}
 source("chart3.R")
 knitr::opts_chunk$set(echo = TRUE)
 ```

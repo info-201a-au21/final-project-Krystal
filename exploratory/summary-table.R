@@ -3,6 +3,8 @@
 library(data.table)
 library(dplyr)
 
+originals <- read.csv("https://raw.githubusercontent.com/info-201a-au21/final-project-SimritaGopalan/main/data/netflix_originals.csv?token=AV5INKOEACOPFRW43Q4PN2TBTXP7K")
+
 genre_grouping <- originals %>%
   group_by(Genre) %>%
   summarize(mean_scores = mean(IMDB.Score))
