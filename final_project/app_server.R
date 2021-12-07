@@ -4,6 +4,7 @@
 library(tidyverse)
 library(shiny)
 library(plotly)
+library(lintr)
 
 # Load Data frame
 originals <- read.csv("https://raw.githubusercontent.com/info-201a-au21/final-project-SimritaGopalan/main/data/netflix_originals.csv?token=ARGUFDBNARBNM6LULBRMFJDBW7YXU")

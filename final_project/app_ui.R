@@ -3,11 +3,12 @@
 # Load Packages
 library(shiny)
 source("app_server.R")
-
+library(lintr)
 
 # Define ui variables
 intro_panel <- tabPanel(
   "Introduction",
+  img(src = "img.jps", height = "350px", align = "center"),
   h1("Netflix Analysis"), 
   p("Netflix is one of the most trending platform that people user to watch 
     shows and movies. Although netflix prodcue and hold hundrends of shows, 
