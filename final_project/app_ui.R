@@ -26,7 +26,12 @@ intro_panel <- tabPanel(
          strong(most_pop_language), ". The genre with the most number of movies 
          and shows is ", strong(most_num_genre), ". The country with the most 
          movies on Nextflix is ", strong(most_movie_country), ", which they have 
-         in total of ", strong(max_movie_number, " movies."))
+         in total of ", strong(max_movie_number, " movies.")),
+  h2("Research Questions: "),
+  tags$p(id = "paragraph3", 
+        "1. What is the average IMBD for each genre per year?", tags$br(),
+        "2. What is the number of movies per country?", tags$br(),
+        "3. What is trend of average IMDB score throughout the year for different genre?"),
 ) 
 
 ui <- navbarPage(
