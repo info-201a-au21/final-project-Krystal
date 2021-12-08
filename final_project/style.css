@@ -1,0 +1,21 @@
+Introduction {
+  background-color: black;
+}
+
+h1 {
+  background-color: pink;
+  padding: 50px;
+}
+
+#paragraph1 {
+  color: white;
+  padding-left: 100px;
+  padding-right: 100px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+#paragraph2 {
+  border: 5px black solid;
+  padding: 30px;
+}
