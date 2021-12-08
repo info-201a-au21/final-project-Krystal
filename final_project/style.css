@@ -13,5 +13,8 @@ h1 {
 
 #paragraph2 {
   border: 5px black solid;
-  padding: 30px;
+  padding-left: 300px;
+  padding-right: 300px;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }

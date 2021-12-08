@@ -8,7 +8,8 @@ library(lintr)
 # Define ui variables
 intro_panel <- tabPanel(
   "Introduction",
-  img(src = "img.jpg", height = "350px", align = "center"),
+  img(src="https://fdn.gsmarena.com/imgroot/news/20/10/netflix-india-free-weekend/-1200/gsmarena_001.jpg", 
+          height = "450px", align = "center"),
   includeCSS("style.css"), 
   h1("Netflix Analysis", align = "center"), 
   tags$p(id= "paragraph1", "Netflix is one of the most trending platform 
