@@ -48,7 +48,7 @@ most_movie_country <- num_movies_country %>%
   filter(movie_count == max_movie_number) %>%
   pull(primary_country)
 
-# Useful datafram for average IMDB score per year
+# Useful dataframe for average IMDB score per year
 imdb_avg_year <- originals %>%
   separate(Premiere, into = c("date", "year"), sep="([,.])") %>%
   select(year, IMDB.Score) %>% 
@@ -68,9 +68,24 @@ rating_genre_year <- movies %>%
 target_year <- unique(rating_genre_year$year_added)
 #target_genre <- unique(rating_genre_year$first_genre)
 
+# Chart 3: Ratings of each genre over the years
+# Table for chart 3
+raw_data_chart_3 <- read.csv("https://raw.githubusercontent.com/info-201a-au21/final-project-SimritaGopalan/main/data/netflix_movies.csv?token=AV5INKLWJQDKBOVKPFKPB63BXEDEG")
+old_data <- data_frame(
+  year = raw_data_chart_3$year,
+  raw_genre = raw_data_chart_3$genre,
+  rating = raw_data_chart_3$rating
+)
+
+data_chart_3 <- mutate(old_data, "Genre" = str_extract(old_data$raw_genre, "[A-Za-z]+"))
+
+sum_table <- data_chart_3 %>%
+  group_by(Genre) %>%
+  group_by(year) %>%
+  summarize(Genre, year, rating = mean(rating))
+
 # Define a server
 server <- function(input, output) {
-  
   #Chart 1
   output$chart1 <- renderPlotly({
     selected_year <- input$year
@@ -79,16 +94,46 @@ server <- function(input, output) {
     score_data <- rating_genre_year #%>%
       #filter(!grepl(",", genre))
     
+<<<<<<< HEAD
     chart1 <- ggplot(data = score_data) +
       geom_col(mapping = aes(x = first_genre, y = mean_scores, 
                fill = input$color)) +
+=======
+    chart_1 <- ggplot(data = score_data) +
+      geom_col(mapping = aes(x = genre, y = mean_scores, 
+                             fill = input$color, na.rm = FALSE)) +
+>>>>>>> e0870af51086cce9e34a83254b394021479be736
       coord_flip() +
       labs(
         x = "Genres",
         y = "Average IMDB Scores",
         title = paste("Average IMDB Scores for each Genre in ", selected_year)
       )
-    ggplotly(chart1)
+    ggplotly(chart_1)
+  })
+  
+  output$chart_3_plot <- renderText({
+    chart_3_plot <- ggplot(sum_table, aes(
+      x = year,
+      y = rating,
+      group = Genre,
+      color = Genre,
+      text = paste(
+        "Genre:", Genre,
+        "\n Year:", year,
+        "\n Rating:", rating
+      )
+    )) +
+      geom_point() +
+      scale_x_continuous(limits = range(1942:2020)) +
+      labs(
+        x = "Year",
+        y = "Rating",
+        title = "Ratings of each genre over the years"
+      )
+    
+    chart_3_plotly <- ggplotly(chart_3_plot, tooltip = c("text"))
+    return(chart_3_plotly)
   })
 }
 

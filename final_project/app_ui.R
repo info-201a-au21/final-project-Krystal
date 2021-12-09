@@ -42,11 +42,14 @@ genre_rating_chart <- tabPanel(
         inputId = "color",
         choices = c("blue", "red", "green", "black", "pink", "orange"),
         label = "Select a color"
-        ),
+      ),
       
+     #app.R wont run because "the object year_added was not found" so I put 
+     #quotes around it as a placeholder
       select_year <- selectInput(
         inputId = "year",
         label = "Select a year",
+<<<<<<< HEAD
         choices = target_year,
         selected = "2018"
         )
@@ -55,16 +58,52 @@ genre_rating_chart <- tabPanel(
       mainPanel(
         plotlyOutput(outputId = "chart1"),
         p("This bar chart shows the average ratings of genres of media
+=======
+        choices = "year_added",
+        selected = "2016"
+      )
+    ),
+    
+    mainPanel(
+      plotlyOutput(outputId = "chart1"),
+      p("This bar chart shows the average ratings of genres of media
+>>>>>>> e0870af51086cce9e34a83254b394021479be736
           on Netflix's platform. In this interactive visualization, 
           viewers can select the color from six choices, and can also
           filter through the four years that the films were added to
           Netflix to see and analyze how the trends change.")
-      )
+    )
   )
 )
+
+chart_3 <- tabPanel(
+  "Ratings Trends",
+  h1("Ratings over the years of each genre"),
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput(
+        inputId = "sliderInput1",
+        label = "Choose starting year",
+        min = 1942,
+        max = 2020,
+        value = 1942
+      ),
+      sliderInput(
+        inputId = "sliderInput2",
+        label = "Choose ending year",
+        min = 1942,
+        max = 2020,
+        value = 2020
+      )
+    ),
+    mainPanel(
+      plotlyOutput(outputId = "chart_3_plot")
+    )
+  )
+) 
 
 ui <- navbarPage(
   "Netflix",
   intro_panel,
-  genre_rating_chart)
-  
+  genre_rating_chart,
+  chart_3)

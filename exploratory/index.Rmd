@@ -37,7 +37,11 @@ knitr::opts_chunk$set(echo = TRUE)
 avg_scores_table
 ```
 
+<<<<<<< HEAD
+```{r setup1, include=FALSE}
+=======
 ```{r setup2, include=FALSE}
+>>>>>>> 870bfc68faa8d3756e34475550c81a526c36fee0
 source("chart1.R")
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -48,8 +52,13 @@ Chart 1 shows a bar graph for the average IMDB score in each genre of Netflix Or
 ``` {r echo=FALSE}
 genre_avg_scores
 ```
+<<<<<<< HEAD
+```{r setup2, include=FALSE}
+source("chart2.R")
+=======
 ```{r setup3, include=FALSE}
 source("chart 2.R")
+>>>>>>> 870bfc68faa8d3756e34475550c81a526c36fee0
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -60,8 +69,13 @@ Chart 2 shows a Count Stack Graph for how many different languages Netflix Origi
 stack_bar
 ```
 
+<<<<<<< HEAD
+```{r setup3, include=FALSE}
+source("chart3.R")
+=======
 ```{r setup4, include=FALSE}
 source("chart 3.R")
+>>>>>>> 870bfc68faa8d3756e34475550c81a526c36fee0
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
