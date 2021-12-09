@@ -60,28 +60,33 @@ year_was_added <- str_sub(movies$enter_in_netflix, -4, -1)
 
 rating_genre_year <- movies %>%
   mutate(year_added = year_was_added) %>%
-  group_by(genre, year_added) %>%
-  mutate(mean_scores = round(mean(rating), 1)) %>%
-  select(genre, mean_scores, year_added)
+  mutate(first_genre = gsub(",.*", "", genre)) %>%
+  group_by(year_added, first_genre) %>%
+  #mutate(mean_scores = round(mean(rating), 1)) %>%
+  summarise(mean_scores = round(mean(rating), 1), .groups = "keep")
+
+target_year <- unique(rating_genre_year$year_added)
+#target_genre <- unique(rating_genre_year$first_genre)
 
 # Define a server
 server <- function(input, output) {
   
   #Chart 1
   output$chart1 <- renderPlotly({
-    selected_year <- input$year_added
+    selected_year <- input$year
+    #selected_genre <- input$genre
     
-    score_data <- rating_genre_year %>%
-      filter(!grepl(",", genre))
+    score_data <- rating_genre_year #%>%
+      #filter(!grepl(",", genre))
     
     chart1 <- ggplot(data = score_data) +
-      geom_col(mapping = aes(x = genre, y = mean_scores, 
-               fill = input$color, na.rm = FALSE)) +
+      geom_col(mapping = aes(x = first_genre, y = mean_scores, 
+               fill = input$color)) +
       coord_flip() +
       labs(
         x = "Genres",
         y = "Average IMDB Scores",
-        title = paste("Average IMDB Scores for each Genre Based on Year")
+        title = paste("Average IMDB Scores for each Genre in ", selected_year)
       )
     ggplotly(chart1)
   })

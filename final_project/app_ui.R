@@ -47,8 +47,8 @@ genre_rating_chart <- tabPanel(
       select_year <- selectInput(
         inputId = "year",
         label = "Select a year",
-        choices = year_added,
-        selected = "2016"
+        choices = target_year,
+        selected = "2018"
         )
       ),
       
