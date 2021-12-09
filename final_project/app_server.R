@@ -56,47 +56,14 @@ imdb_avg_year <- originals %>%
   summarise(IMDB.Score = mean(IMDB.Score, na.rm = TRUE))
 
 # Chart 1: avg IMDB for genre per year
-year_added <- str_sub(movies$enter_in_netflix, -4, -1)
+year_was_added <- str_sub(movies$enter_in_netflix, -4, -1)
 
 rating_genre_year <- movies %>%
-  mutate(year_added = year_added) %>%
-  select(genre, rating, year_added)
+  mutate(year_added = year_was_added) %>%
+  group_by(genre, year_added) %>%
+  mutate(mean_scores = round(mean(rating), 1)) %>%
+  select(genre, mean_scores, year_added)
 
-chart_1 <- rating_genre_year %>%
-  group_by(genre) %>%
-  filter(!grepl(",", genre)) %>%
-  summarize(num = n_distinct(genre), mean_scores = mean(rating)) %>%
-  ggplot(aes(x = genre, y = mean_scores)) +
-  geom_col() +
-  geom_text(aes(label = round(mean_scores, 1), hjust = -0.2)) +
-  coord_flip() +
-  theme(legend.position = "none") +
-  labs(
-    x = "Genres",
-    y = "Average IMDB Scores",
-    title = paste("Average IMDB Scores for each Genre Based on Year")
-  )
-
-chart_1 <- ggplotly(chart_1)
-
-chart_1 %>% style(
-  marker = list(
-    list(
-      type = "buttons",
-      x = 0.2,
-      y = 0.4,
-      buttons = list(
-        
-        list(method = "restyle",
-             args = list("bar.color", "blue"),
-             label = "Blue"),
-        
-        list(method = "restyle",
-             args = list("bar.color", "red"),
-             label = "Red")))
-  ),
-  hoverinfo = genre, mean_scores
-)
 # Chart 3: Ratings of each genre over the years
 # Table for chart 3
 raw_data_chart_3 <- read.csv("https://raw.githubusercontent.com/info-201a-au21/final-project-SimritaGopalan/main/data/netflix_movies.csv?token=AV5INKLWJQDKBOVKPFKPB63BXEDEG")
@@ -115,7 +82,26 @@ sum_table <- data_chart_3 %>%
 
 # Define a server
 server <- function(input, output) {
-  output$chart_3 <- renderText({
+  #Chart 1
+  output$chart1 <- renderPlotly({
+    selected_year <- input$year_added
+    
+    score_data <- rating_genre_year %>%
+      filter(!grepl(",", genre))
+    
+    chart_1 <- ggplot(data = score_data) +
+      geom_col(mapping = aes(x = genre, y = mean_scores, 
+                             fill = input$color, na.rm = FALSE)) +
+      coord_flip() +
+      labs(
+        x = "Genres",
+        y = "Average IMDB Scores",
+        title = paste("Average IMDB Scores for each Genre Based on Year")
+      )
+    ggplotly(chart_1)
+  })
+  
+  output$chart_3_plot <- renderText({
     chart_3_plot <- ggplot(sum_table, aes(
       x = year,
       y = rating,
@@ -128,7 +114,7 @@ server <- function(input, output) {
       )
     )) +
       geom_point() +
-      scale_x_continuous(limits = range(sliderInput1:sliderInput2)) +
+      scale_x_continuous(limits = range(1942:2020)) +
       labs(
         x = "Year",
         y = "Rating",
@@ -136,6 +122,7 @@ server <- function(input, output) {
       )
     
     chart_3_plotly <- ggplotly(chart_3_plot, tooltip = c("text"))
+    return(chart_3_plotly)
   })
 }
 
