@@ -2,7 +2,7 @@
 
 # Load Packages
 library(shiny)
-source("app_server.R")
+#source("app_server.R")
 library(lintr)
 
 # Define ui variables
@@ -10,7 +10,7 @@ intro_panel <- tabPanel(
   "Introduction",
   img(src="https://fdn.gsmarena.com/imgroot/news/20/10/netflix-india-free-weekend/-1200/gsmarena_001.jpg", 
           height = "450px", align = "center"),
-  includeCSS("style.css"), 
+  #includeCSS("style.css"), 
   h1("Netflix Analysis", align = "center"), 
   tags$p(id= "paragraph1", "Netflix is one of the most trending platforms 
         that people use to watch TV shows and movies. Although Netflix produces 
@@ -91,8 +91,41 @@ chart_3 <- tabPanel(
   )
 ) 
 
+page_two <- tabPanel(
+  #label for the tab in navbar
+  "Where are Movies Produced World Map", 
+  p(h2("Which country is this movie produced in?")),
+  sidebarLayout(
+    sidebarPanel(
+      textInput(inputId = "Movie", label = "Search for a movie's name:"),
+      textOutput(outputId = "message"),
+    ),
+    mainPanel(
+      # Second Tab is the Plot
+      # Added heading for the Plot
+      # Displayed ggplot created in the server
+      # Displayed reactive caption for the plot created in the server
+      p(h3(strong("Country produced"))),
+      p("This world map attempts to display the country/countries a specific Netflix movie is produced in."),
+      plotlyOutput("Plot"), 
+      p(h4(strong("Findings"))),
+      textOutput(outputId = "analysis"),
+      br()
+    )
+  )
+)
+
+summary_panel <- tabPanel(
+  "Analysis Conclusion",
+  h1("Conclusion Page", align = "center"), 
+  tags$p(id= "paragraph1", "Presents 3+ specific takeaways from the analysis, tying the project back to the intention set out in the introduction.."),
+)
+
 ui <- navbarPage(
   "Netflix",
   intro_panel,
   genre_rating_chart,
-  chart_3)
+  chart_3,
+  page_two,
+  summary_panel,
+  )
