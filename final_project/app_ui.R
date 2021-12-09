@@ -83,6 +83,17 @@ chart_3 <- tabPanel(
         min = 1942,
         max = 2020,
         value = 2020
+      ),
+      selectInput(
+        inputId = "color_input",
+        label = "Choose a set of colors for chart",
+        choices = list(
+          "Light" = "Set3",
+          "Bold" = "Paired",
+          "Spectral" = "Spectral",
+          "Gradient" = "YlGnHu"
+        ),
+        selected = "Bold"
       )
     ),
     mainPanel(

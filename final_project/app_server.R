@@ -1,10 +1,10 @@
 # App Server
 
 # load packages
-library(tidyverse)
-library(shiny)
-library(plotly)
-library(lintr)
+library("tidyverse")
+library("shiny")
+library("plotly")
+library("lintr")
 
 # Load Data frame
 originals <- read.csv("https://raw.githubusercontent.com/info-201a-au21/final-project-SimritaGopalan/main/data/netflix_originals.csv?token=ARGUFDBNARBNM6LULBRMFJDBW7YXU")
@@ -101,6 +101,7 @@ server <- function(input, output) {
     ggplotly(chart_1)
   })
   
+  #Chart 3
   output$chart_3_plot <- renderPlotly({
     chart_3_plot <- ggplot(sum_table, aes(
       x = year,
@@ -119,7 +120,7 @@ server <- function(input, output) {
         x = "Year",
         y = "Rating",
         title = "Ratings of each genre over the years"
-      )
+      ) 
     
     chart_3_plotly <- ggplotly(chart_3_plot, tooltip = c("text"))
     return(chart_3_plotly)
