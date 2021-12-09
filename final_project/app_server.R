@@ -56,10 +56,10 @@ imdb_avg_year <- originals %>%
   summarise(IMDB.Score = mean(IMDB.Score, na.rm = TRUE))
 
 # Chart 1: avg IMDB for genre per year
-year_added <- str_sub(movies$enter_in_netflix, -4, -1)
+year_was_added <- str_sub(movies$enter_in_netflix, -4, -1)
 
 rating_genre_year <- movies %>%
-  mutate(year_added = year_added) %>%
+  mutate(year_added = year_was_added) %>%
   group_by(genre, year_added) %>%
   mutate(mean_scores = round(mean(rating), 1)) %>%
   select(genre, mean_scores, year_added)
@@ -74,7 +74,7 @@ server <- function(input, output) {
     score_data <- rating_genre_year %>%
       filter(!grepl(",", genre))
     
-    chart_1 <- ggplot(data = score_data) +
+    chart1 <- ggplot(data = score_data) +
       geom_col(mapping = aes(x = genre, y = mean_scores, 
                fill = input$color, na.rm = FALSE)) +
       coord_flip() +
@@ -83,7 +83,7 @@ server <- function(input, output) {
         y = "Average IMDB Scores",
         title = paste("Average IMDB Scores for each Genre Based on Year")
       )
-    ggplotly(chart_1)
+    ggplotly(chart1)
   })
 }
 
