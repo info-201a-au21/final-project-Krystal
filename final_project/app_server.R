@@ -101,7 +101,7 @@ server <- function(input, output) {
     ggplotly(chart_1)
   })
   
-  output$chart_3_plot <- renderText({
+  output$chart_3_plot <- renderPlotly({
     chart_3_plot <- ggplot(sum_table, aes(
       x = year,
       y = rating,
@@ -114,7 +114,7 @@ server <- function(input, output) {
       )
     )) +
       geom_point() +
-      scale_x_continuous(limits = range(1942:2020)) +
+      scale_x_continuous(limits = range(input$start_year:input$end_year)) +
       labs(
         x = "Year",
         y = "Rating",
