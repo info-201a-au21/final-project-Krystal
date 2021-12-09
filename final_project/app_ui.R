@@ -108,7 +108,11 @@ chart_3 <- tabPanel(
     ),
     mainPanel(
       plotlyOutput(outputId = "chart_3_plot"),
-      p(em("Click on a genre on the legend to hide its data on the graph."))
+      p(em("Click on a genre on the legend to hide its data on the graph.")),
+      p("This chart shows the average rating trend of each genre over the years.
+        User can select a starting year and an ending year from the left panel. 
+        User can also choose a specific background color and whether they want 
+        to display the grid on chart or not.")
     )
   )
 ) 
