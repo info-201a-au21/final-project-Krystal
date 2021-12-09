@@ -49,7 +49,6 @@ genre_rating_chart <- tabPanel(
       select_year <- selectInput(
         inputId = "year",
         label = "Select a year",
-<<<<<<< HEAD
         choices = target_year,
         selected = "2018"
         )
@@ -58,16 +57,6 @@ genre_rating_chart <- tabPanel(
       mainPanel(
         plotlyOutput(outputId = "chart1"),
         p("This bar chart shows the average ratings of genres of media
-=======
-        choices = "year_added",
-        selected = "2016"
-      )
-    ),
-    
-    mainPanel(
-      plotlyOutput(outputId = "chart1"),
-      p("This bar chart shows the average ratings of genres of media
->>>>>>> e0870af51086cce9e34a83254b394021479be736
           on Netflix's platform. In this interactive visualization, 
           viewers can select the color from six choices, and can also
           filter through the four years that the films were added to

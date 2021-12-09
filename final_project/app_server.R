@@ -82,7 +82,7 @@ data_chart_3 <- mutate(old_data, "Genre" = str_extract(old_data$raw_genre, "[A-Z
 sum_table <- data_chart_3 %>%
   group_by(Genre) %>%
   group_by(year) %>%
-  summarize(Genre, year, rating = mean(rating))
+  summarize(Genre, year, rating = mean(rating), .groups = "drop")
 
 # Define a server
 server <- function(input, output) {
@@ -94,15 +94,9 @@ server <- function(input, output) {
     score_data <- rating_genre_year #%>%
       #filter(!grepl(",", genre))
     
-<<<<<<< HEAD
     chart1 <- ggplot(data = score_data) +
       geom_col(mapping = aes(x = first_genre, y = mean_scores, 
                fill = input$color)) +
-=======
-    chart_1 <- ggplot(data = score_data) +
-      geom_col(mapping = aes(x = genre, y = mean_scores, 
-                             fill = input$color, na.rm = FALSE)) +
->>>>>>> e0870af51086cce9e34a83254b394021479be736
       coord_flip() +
       labs(
         x = "Genres",
