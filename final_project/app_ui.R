@@ -71,14 +71,14 @@ chart_3 <- tabPanel(
   sidebarLayout(
     sidebarPanel(
       sliderInput(
-        inputId = "sliderInput1",
+        inputId = "start_year",
         label = "Choose starting year",
         min = 1942,
         max = 2020,
         value = 1942
       ),
       sliderInput(
-        inputId = "sliderInput2",
+        inputId = "end_year",
         label = "Choose ending year",
         min = 1942,
         max = 2020,
