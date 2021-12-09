@@ -60,9 +60,13 @@ year_was_added <- str_sub(movies$enter_in_netflix, -4, -1)
 
 rating_genre_year <- movies %>%
   mutate(year_added = year_was_added) %>%
-  group_by(genre, year_added) %>%
-  mutate(mean_scores = round(mean(rating), 1)) %>%
-  select(genre, mean_scores, year_added)
+  mutate(first_genre = gsub(",.*", "", genre)) %>%
+  group_by(year_added, first_genre) %>%
+  #mutate(mean_scores = round(mean(rating), 1)) %>%
+  summarise(mean_scores = round(mean(rating), 1), .groups = "keep")
+
+target_year <- unique(rating_genre_year$year_added)
+#target_genre <- unique(rating_genre_year$first_genre)
 
 # Chart 3: Ratings of each genre over the years
 # Table for chart 3
@@ -78,25 +82,26 @@ data_chart_3 <- mutate(old_data, "Genre" = str_extract(old_data$raw_genre, "[A-Z
 sum_table <- data_chart_3 %>%
   group_by(Genre) %>%
   group_by(year) %>%
-  summarize(Genre, year, rating = mean(rating))
+  summarize(Genre, year, rating = round(mean(rating), 2), .groups = "drop")
 
 # Define a server
 server <- function(input, output) {
   #Chart 1
   output$chart1 <- renderPlotly({
-    selected_year <- input$year_added
+    selected_year <- input$year
+    #selected_genre <- input$genre
     
-    score_data <- rating_genre_year %>%
-      filter(!grepl(",", genre))
+    score_data <- rating_genre_year #%>%
+      #filter(!grepl(",", genre))
     
-    chart_1 <- ggplot(data = score_data) +
-      geom_col(mapping = aes(x = genre, y = mean_scores, 
-                             fill = input$color, na.rm = FALSE)) +
+    chart1 <- ggplot(data = score_data) +
+      geom_col(mapping = aes(x = first_genre, y = mean_scores, 
+               fill = input$color)) +
       coord_flip() +
       labs(
         x = "Genres",
         y = "Average IMDB Scores",
-        title = paste("Average IMDB Scores for each Genre Based on Year")
+        title = paste("Average IMDB Scores for each Genre in ", selected_year)
       )
     ggplotly(chart_1)
   })
@@ -119,8 +124,15 @@ server <- function(input, output) {
       labs(
         x = "Year",
         y = "Rating",
-        title = "Ratings of each genre over the years"
-      ) 
+        title = "Rating trend of each genre over the years"
+      ) + theme(
+        plot.title = element_text(size = rel(2)),
+        plot.background = element_rect(
+          fill = input$backgroundInput,
+          colour = "grey50"
+        ),
+        panel.grid.major = element_line(colour = input$gridInput)
+      )
     
     chart_3_plotly <- ggplotly(chart_3_plot, tooltip = c("text"))
     return(chart_3_plotly)
