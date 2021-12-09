@@ -34,7 +34,31 @@ intro_panel <- tabPanel(
         "3. What is trend of average IMDB score throughout the year for different genre?"),
 ) 
 
+chart_3 <- tabPanel(
+  "Introduction",
+  h1("Ratings over the years of each genre"),
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput(
+        inputId = "sliderInput1",
+        label = "Choose starting year",
+        min = 1942,
+        max = 2020,
+        value = 1942
+      ),
+      sliderInput(
+        inputId = "sliderInput2",
+        label = "Choose ending year",
+        min = 1942,
+        max = 2020,
+        value = 2020
+      )
+    )
+  )
+) 
+  
 ui <- navbarPage(
   "Netflix",
-  intro_panel)
+  intro_panel, 
+  chart_3)
   

@@ -48,7 +48,7 @@ most_movie_country <- num_movies_country %>%
   filter(movie_count == max_movie_number) %>%
   pull(primary_country)
 
-# Useful datafram for average IMDB score per year
+# Useful dataframe for average IMDB score per year
 imdb_avg_year <- originals %>%
   separate(Premiere, into = c("date", "year"), sep="([,.])") %>%
   select(year, IMDB.Score) %>% 
@@ -97,11 +97,46 @@ chart_1 %>% style(
   ),
   hoverinfo = genre, mean_scores
 )
-  
+# Chart 3: Ratings of each genre over the years
+# Table for chart 3
+raw_data_chart_3 <- read.csv("https://raw.githubusercontent.com/info-201a-au21/final-project-SimritaGopalan/main/data/netflix_movies.csv?token=AV5INKLWJQDKBOVKPFKPB63BXEDEG")
+old_data <- data_frame(
+  year = raw_data_chart_3$year,
+  raw_genre = raw_data_chart_3$genre,
+  rating = raw_data_chart_3$rating
+)
+
+data_chart_3 <- mutate(old_data, "Genre" = str_extract(old_data$raw_genre, "[A-Za-z]+"))
+
+sum_table <- data_chart_3 %>%
+  group_by(Genre) %>%
+  group_by(year) %>%
+  summarize(Genre, year, rating = mean(rating))
 
 # Define a server
 server <- function(input, output) {
-  
+  output$chart_3 <- renderText({
+    chart_3_plot <- ggplot(sum_table, aes(
+      x = year,
+      y = rating,
+      group = Genre,
+      color = Genre,
+      text = paste(
+        "Genre:", Genre,
+        "\n Year:", year,
+        "\n Rating:", rating
+      )
+    )) +
+      geom_point() +
+      scale_x_continuous(limits = range(sliderInput1:sliderInput2)) +
+      labs(
+        x = "Year",
+        y = "Rating",
+        title = "Ratings of each genre over the years"
+      )
+    
+    chart_3_plotly <- ggplotly(chart_3_plot, tooltip = c("text"))
+  })
 }
 
 # 1. What is the average IMBD for each genre per year? 
