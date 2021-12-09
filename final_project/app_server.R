@@ -126,7 +126,7 @@ server <- function(input, output) {
         y = "Rating",
         title = "Rating trend of each genre over the years"
       ) + theme(
-        plot.title = element_text(size = rel(2)),
+        plot.title = element_text(size = rel(1.5)),
         plot.background = element_rect(
           fill = input$backgroundInput,
           colour = "grey50"

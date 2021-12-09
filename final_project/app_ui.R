@@ -67,7 +67,7 @@ genre_rating_chart <- tabPanel(
 
 chart_3 <- tabPanel(
   "Ratings Trends",
-  h1("Ratings over the years of each genre"),
+  h2("Rating trends over the years."),
   sidebarLayout(
     sidebarPanel(
       sliderInput(
