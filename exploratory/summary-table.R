@@ -19,3 +19,4 @@ avg_scores_table$V2 <- round(avg_scores_table$V2, digit = 2)
 avg_scores_table$V3 <- num_genre[, 2]
 colnames(avg_scores_table) <- c("Genre", "Average IMDB Score", "Count")
 avg_scores_table <- avg_scores_table[, c(1, 3, 2)]
+
