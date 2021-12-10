@@ -29,38 +29,40 @@ intro_panel <- tabPanel(
          they have ", strong(max_movie_number, " movies.")),
   h2("Research Questions: "),
   tags$p(id = "paragraph3", 
-        "1. What is the average IMBD score for each genre per year?", tags$br(),
-        "2. What is the number of movies per country?", tags$br(),
-        "3. What is trend of average IMDB score throughout the year for different genres?"),
+         "1. What is the number of media for each genre per year?", tags$br(),
+         "2. What is the number of movies per country?", tags$br(),
+         "3. What is the trend of average IMDB scores throughout the year for 
+         different genres?"),
 ) 
 
-genre_rating_chart <- tabPanel(
-  "Genre vs. Rating",
+chart_1 <- tabPanel(
+  "Number per Genre",
   sidebarLayout(
     sidebarPanel(
       select_color <- selectInput(
         inputId = "color",
-        choices = c("blue", "red", "green", "black", "pink", "orange"),
+        choices = c("blue", "red", "green", "black", 
+                    "pink", "orange", "purple", "yellow"),
         label = "Select a color"
       ),
       
-     #app.R wont run because "the object year_added was not found" so I put 
-     #quotes around it as a placeholder
       select_year <- selectInput(
-        inputId = "year",
+        inputId = "year_added",
         label = "Select a year",
-        choices = target_year,
-        selected = "2018"
-        )
-      ),
-      
-      mainPanel(
-        plotlyOutput(outputId = "chart1"),
-        p("This bar chart shows the average ratings of genres of media
+        choices = years,
+        selected = "2020"
+      )
+    ),
+    
+    mainPanel(
+      plotlyOutput(outputId = "chart1"),
+      p("This bar chart shows the numbers of media of each genre
           on Netflix's platform. In this interactive visualization, 
-          viewers can select the color from six choices, and can also
-          filter through the four years that the films were added to
-          Netflix to see and analyze how the trends change.")
+          viewers can select the color from eight choices, and can also
+          filter through the years from 2008 to 2020 that the films were 
+          added to Netflix to see and analyze how the trends change. It should 
+          be noted that because this is not a complete list of films, there
+          are no values in the 2008 and 2010 graphs.")
     )
   )
 )
@@ -96,6 +98,7 @@ chart_3 <- tabPanel(
         ),
         selected = "white"
       ),
+      
       selectInput(
         inputId = "gridInput",
         label = "Display grid on chart",
@@ -104,8 +107,8 @@ chart_3 <- tabPanel(
           "No" = "grey93"
         ),
         selected = "white"
-      )
-    ),
+        )
+      ),
     mainPanel(
       plotlyOutput(outputId = "chart_3_plot"),
       p(em("Click on a genre on the legend to hide its data on the graph.")),
@@ -150,7 +153,7 @@ summary_panel <- tabPanel(
 ui <- navbarPage(
   "Netflix",
   intro_panel,
-  genre_rating_chart,
+  chart_1,
   chart_3,
   page_two,
   summary_panel,

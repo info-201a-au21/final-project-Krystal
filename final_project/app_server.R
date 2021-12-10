@@ -55,18 +55,16 @@ imdb_avg_year <- originals %>%
   group_by(year) %>% 
   summarise(IMDB.Score = mean(IMDB.Score, na.rm = TRUE))
 
-# Chart 1: avg IMDB for genre per year
+# Chart 1: media for genre per year
 year_was_added <- str_sub(movies$enter_in_netflix, -4, -1)
 
-rating_genre_year <- movies %>%
+genre_year <- movies %>%
   mutate(year_added = year_was_added) %>%
-  mutate(first_genre = gsub(",.*", "", genre)) %>%
-  group_by(year_added, first_genre) %>%
-  #mutate(mean_scores = round(mean(rating), 1)) %>%
-  summarise(mean_scores = round(mean(rating), 1), .groups = "keep")
+  group_by(genre, year_added) %>%
+  filter(year_added == year_added, na.rm = TRUE) %>%
+  select(genre, year_added)
 
-target_year <- unique(rating_genre_year$year_added)
-#target_genre <- unique(rating_genre_year$first_genre)
+years <- unique(genre_year$year_added)
 
 # Chart 3: Ratings of each genre over the years
 # Table for chart 3
@@ -86,25 +84,26 @@ sum_table <- data_chart_3 %>%
 
 # Define a server
 server <- function(input, output) {
-  #Chart 1
-  output$chart1 <- renderPlotly({
-    selected_year <- input$year
-    #selected_genre <- input$genre
     
-    score_data <- rating_genre_year #%>%
-      #filter(!grepl(",", genre))
-    
-    chart1 <- ggplot(data = score_data) +
-      geom_col(mapping = aes(x = first_genre, y = mean_scores, 
-               fill = input$color)) +
-      coord_flip() +
-      labs(
-        x = "Genres",
-        y = "Average IMDB Scores",
-        title = paste("Average IMDB Scores for each Genre in ", selected_year)
-      )
-    ggplotly(chart_1)
-  })
+    #Chart 1
+    output$chart1 <- renderPlotly({
+      selected_year <- input$year_added
+      
+      score_data <- genre_year %>%
+        filter(!grepl(",", genre)) %>%
+        filter(year_added == selected_year)
+      
+      chart1 <- ggplot(data = score_data) +
+        geom_bar(mapping = aes(x = genre),
+                 fill = input$color, show.legend = FALSE) +
+        coord_flip() +
+        labs(
+          x = "Genres",
+          y = "Number of Media",
+          title = paste("Numbers of Media for each Genre")
+        )
+      ggplotly(chart1)
+    })
   
   #Chart 3
   output$chart_3_plot <- renderPlotly({
@@ -139,8 +138,8 @@ server <- function(input, output) {
   })
 }
 
-# 1. What is the average IMBD for each genre per year? 
-# (x = Genre, y Genre, dropdown = year)
+# 1. What is the number of media for each genre per year? 
+# (x = Genre, y = num, dropdown = year)
 # 2. What is the number of movies per country? (Map)
 # 3. What is trend of average IMDB score throughout the year 
 # for different genre? (x = years, y = Average score, dropdown = Genre)
