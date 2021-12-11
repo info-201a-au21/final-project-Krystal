@@ -25,12 +25,11 @@ intro_panel <- tabPanel(
          "minutes. The most common language on Netflix is ",
          strong(most_pop_language), ". The genre with the most number of movies 
          and shows is ", strong(most_num_genre), ". The country with the most 
-         movies on Netflix is ", strong(most_movie_country), ", which in total 
-         they have ", strong(max_movie_number, " movies.")),
+         movies on Netflix is ", strong(most_movie_country)),
   h2("Research Questions: "),
   tags$p(id = "paragraph3", 
          "1. What is the number of media for each genre per year?", tags$br(),
-         "2. What is the number of movies per country?", tags$br(),
+         "2. What is the number of movies per Country (in each Continent) available on Netflix?", tags$br(),
          "3. What is the trend of average IMDB scores throughout the year for 
          different genres?"),
 ) 
@@ -120,34 +119,48 @@ chart_3 <- tabPanel(
   )
 ) 
 
-page_two <- tabPanel(
-  #label for the tab in navbar
-  "Where are Movies Produced World Map", 
-  p(h2("Which country is this movie produced in?")),
+#page3chart2
+chart_2 <- tabPanel(
+  "Number of Movies Produced",
   sidebarLayout(
     sidebarPanel(
-      textInput(inputId = "Movie", label = "Search for a movie's name:"),
-      textOutput(outputId = "message"),
+      select_color <- selectInput(
+        inputId = "Color",
+        choices = c("Red", "Green", "Blue", "Yellow", "Orange", "Purple"),
+        label = "Select a Color"
+      ),
+      select_year <- selectInput(
+        inputId = "Continent",
+        label = "Select a Continent",
+        choices = continents,
+        selected = "South America"
+      )
     ),
+    
     mainPanel(
-      # Second Tab is the Plot
-      # Added heading for the Plot
-      # Displayed ggplot created in the server
-      # Displayed reactive caption for the plot created in the server
-      p(h3(strong("Country produced"))),
-      p("This world map attempts to display the country/countries a specific Netflix movie is produced in."),
-      plotlyOutput("Plot"), 
-      p(h4(strong("Findings"))),
-      textOutput(outputId = "analysis"),
-      br()
+      plotlyOutput(outputId = "chart2"),
+      p("Explanation and Analysis:"),
+      p("This bar chart shows how many movies available on Netflix are produced in the countries of each respective continent. Note that not all every country in the continent is included, as Netflix did not have a movie that was produced in that country. Through this interactive visualization, you can change the bar graph to be 6 different colors. You are also able to choose between a dropdown menu of continents, and see how many movies were produced in each country in the corresponding continent. When hovering over the bars, you can see the Count (number of movies produced in that country on Netflix), and the name of the country.
+Through this bar graph, you are able to see that the United States is the country where the most movies available on Netflix are produced, with a total of 1400. Second is India, with 695. You are also able to see the Countries with the greatest movie production per Continent. North America: United States, South America: Argentina, Asia: India, Africa: Egypt, Europe: United Kingdom, Oceania and Australia: Australia. 
+This highlights the pattern that the countries with the highest movie production (as available on Netflix) are the countries with a large GDP, and strong film industry. You can also see the disparity between countries and movies produced, as many countries only have 1 movie produced in their country available on Netflix, such as Guatemala and Algeria. 
+The data is updated as of 2020. Created by Navya Garg
+")
     )
   )
 )
 
 summary_panel <- tabPanel(
-  "Analysis Conclusion",
-  h1("Conclusion Page", align = "center"), 
-  tags$p(id= "paragraph1", "Presents 3+ specific takeaways from the analysis, tying the project back to the intention set out in the introduction.."),
+  "Conclusion Page",
+  h1("Conclusion", align = "center"),
+  p(em("Specific Takeaways")),
+  tags$p(id= "paragraph1", "Through this analysis, we answered the following questions:"),
+  p(em("What is the number of media for each genre per year?")),
+  p("We found that Stand-up Comedy remains to be the genre with the most numbers of media. Though, in 2020, the both Dramas and Action & Adventure were recorded to have the highest numbers of media, followed by Stand-up Comedy"),
+  p(em("What is the trend of average IMDB scores throughout the year for different genres?")),
+  p("From the Ratings Trends chart, we found that since the 1990s, the average rating for all genres start to decline significantly."),
+  p(em("What is the number of movies per Country (in each Continent) available on Netflix? ")),
+  p("Through the bar chart for Number of Movies Produced per Country in each Continent, we found that the most movies are produced in the United States, with India second. Countries with a major film industry and higher GDP than others in the Continent tended to produce more Movies."),
+  p(em("Created by Navya Garg, Uyen, Simrita, Krystal")),
 )
 
 ui <- navbarPage(
@@ -155,6 +168,6 @@ ui <- navbarPage(
   intro_panel,
   chart_1,
   chart_3,
-  page_two,
+  chart_2,
   summary_panel,
   )

@@ -6,10 +6,15 @@ library("shiny")
 library("plotly")
 library("lintr")
 
+
+
 # Load Data frame
 originals <- read.csv("https://raw.githubusercontent.com/info-201a-au21/final-project-SimritaGopalan/main/data/netflix_originals.csv?token=ARGUFDBNARBNM6LULBRMFJDBW7YXU")
 movies <- read.csv("https://raw.githubusercontent.com/info-201a-au21/final-project-SimritaGopalan/main/data/netflix_movies.csv?token=ARGUFDHDQBS4EW54JRXSZZTBW73CM")
-
+countryproduced_data <- read.csv(
+  "https://raw.githubusercontent.com/info-201a-au21/final-project-SimritaGopalan/main/data/netflix_movies.csv?token=ATTAO3KJZM5POJTHNQD7AH3BXKHBI", 
+  stringsAsFactors = FALSE
+)
 # Relavent variables
 # Average IMDB score of all movies.
 avg_score <- mean(originals$IMDB.Score)
@@ -82,6 +87,34 @@ sum_table <- data_chart_3 %>%
   group_by(year) %>%
   summarize(Genre, year, rating = round(mean(rating), 2), .groups = "drop")
 
+#Page 3 - Country Analysis
+# make df with continents, country
+countryproduced_data <- countryproduced_data %>%
+  rename (Movie = movie_name) %>% 
+  rename (Country = country)
+
+filteredcountryproduced_data <- countryproduced_data %>%
+  select (Country)
+
+individualcountry <- filteredcountryproduced_data %>% 
+  group_by(Country) %>% 
+  mutate(Country = strsplit(gsub("[][\"]", "", Country), ", ")) %>%
+  unnest(Country)
+
+continentdata <- read.csv("https://raw.githubusercontent.com/info-201a-au21/final-project-SimritaGopalan/main/final_project/countrycontinent.csv?token=ATTAO3MV2KHAU3QJAXMK4LTBXWAFU")
+
+
+allcontinents <- str_sub(continentdata$Continent)
+
+countrycontinent <- continentdata %>%
+  mutate(Continent = allcontinents) %>%
+  group_by(Country, Continent) %>%
+  filter(Continent == Continent, na.rm = TRUE) %>%
+  select(Country, Continent)
+
+continentnames <- unique(countrycontinent$Continent)
+
+
 # Define a server
 server <- function(input, output) {
     
@@ -136,10 +169,26 @@ server <- function(input, output) {
     chart_3_plotly <- ggplotly(chart_3_plot, tooltip = c("text"))
     return(chart_3_plotly)
   })
+
+#Chart 2
+  
+  output$chart2 <- renderPlotly({
+    selected_continent <- input$Continent
+    
+    ccdata <- countrycontinent %>%
+      filter(!grepl(",", Country)) %>%
+      filter(Continent == selected_continent)
+    
+    chart2 <- ggplot(data = ccdata) +
+      geom_bar(mapping = aes(x = Country),
+               fill = input$Color, show.legend = FALSE) +
+      coord_flip() +
+      labs(
+        x = "Countries",
+        y = "Number of Movies Produced",
+        title = paste("Number of Movies Produced in Each Country per Continent on Netflix")
+      )
+    ggplotly(chart2)
+  })
 }
 
-# 1. What is the number of media for each genre per year? 
-# (x = Genre, y = num, dropdown = year)
-# 2. What is the number of movies per country? (Map)
-# 3. What is trend of average IMDB score throughout the year 
-# for different genre? (x = years, y = Average score, dropdown = Genre)
