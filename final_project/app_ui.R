@@ -30,8 +30,7 @@ intro_panel <- tabPanel(
   tags$p(id = "paragraph3", 
          "1. What is the number of media for each genre per year?", tags$br(),
          "2. What is the number of movies per Country (in each Continent) available on Netflix?", tags$br(),
-         "3. What is the trend of average IMDB scores throughout the year for 
-         different genres?"),
+         "3. What is the trend of average ratings for each genre throughout the year?"),
 ) 
 
 chart_1 <- tabPanel(
@@ -132,7 +131,7 @@ chart_2 <- tabPanel(
       select_year <- selectInput(
         inputId = "Continent",
         label = "Select a Continent",
-        choices = continents,
+        choices = continentnames,
         selected = "South America"
       )
     ),
@@ -156,7 +155,7 @@ summary_panel <- tabPanel(
   tags$p(id= "paragraph1", "Through this analysis, we answered the following questions:"),
   p(em("What is the number of media for each genre per year?")),
   p("We found that Stand-up Comedy remains to be the genre with the most numbers of media. Though, in 2020, the both Dramas and Action & Adventure were recorded to have the highest numbers of media, followed by Stand-up Comedy"),
-  p(em("What is the trend of average IMDB scores throughout the year for different genres?")),
+  p(em("What is the trend of average ratings for each genre throughout the year?")),
   p("From the Ratings Trends chart, we found that since the 1990s, the average rating for all genres start to decline significantly."),
   p(em("What is the number of movies per Country (in each Continent) available on Netflix? ")),
   p("Through the bar chart for Number of Movies Produced per Country in each Continent, we found that the most movies are produced in the United States, with India second. Countries with a major film industry and higher GDP than others in the Continent tended to produce more Movies."),
